@@ -196,8 +196,9 @@
     </article>
 
     <script>
-        const random = (min,max)=>{return Math.floor(Math.random() * (max - min)) + min}
-        const uniform = (min,max)=>{return Math.random() * (max - min) + min}
+        const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
+        const uniform = (min, max) => Math.random() * (max - min) + min
+
         const objects = [
             { path: 'item1.png', x: 80, y: 30, z: 1 },
             { path: 'item2.png', x: 50, y: 42, z: 1 },
@@ -220,48 +221,76 @@
             { path: 'item19.png', x: 19, y: 84, z: 1 },
             { path: 'item20.png', x: 30, y: 13, z: 1 },
         ]
+
         const wrapper = document.getElementById('particles-list')
-        objects.forEach((obj, index)=>{
+
+        objects.forEach((obj, index) => {
             const item = document.createElement('img')
-            const rotate = uniform(-30,30)
-            const scale = uniform(.5, 1)
+            item.src = `media/${obj.path}`
+            const rotate = uniform(-30, 30)
+            const scale = uniform(0.5, 1)
             item.classList.add('main__particles-item')
-            item.style.top = obj.y+'%'
-            item.style.left = obj.x+'%'
+            item.style.position = 'absolute'
+            item.style.top = obj.y + '%'
+            item.style.left = obj.x + '%'
             item.style.zIndex = obj.z
             item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg) scale(${scale})`
-            item.src = `media/${obj.path}`
+            item.style.webkitTransform = item.style.transform
+            item.style.opacity = 0
+            item.style.width = '0px'
+            item.style.height = '0px'
+            item.style.transition = 'all .5s ease'
+            item.style.webkitTransition = 'all .5s ease'
+
+            setTimeout(() => {
+                item.style.opacity = 1
+                item.style.width = '64px'
+                item.style.height = '64px'
+            }, random(50, 200))
 
             const style = document.createElement('style')
-            style.textContent = `
-            @keyframes floatItem${index}
-            {
-                0% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20,21)}px,${random(-20,21)}px) rotate(${uniform(-10,10)}deg)}
-                33% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20,21)}px,${random(-20,21)}px) rotate(${uniform(-10,10)}deg)}
-                66% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20,21)}px,${random(-20,21)}px) rotate(${uniform(-10,10)}deg)}
-                100% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20,21)}px,${random(-20,21)}px) rotate(${uniform(-10,10)}deg)}
+            const keyframes = `
+            @keyframes floatItem${index} {
+                0% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+                33% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+                66% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+                100% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
             }
-            `
+            @-webkit-keyframes floatItem${index} {
+                0% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+                33% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+                66% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+                100% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+            }`
+            style.textContent = keyframes
             document.head.appendChild(style)
-            item.style.animation = `floatItem${index} ${random(20,30)}s infinite alternate`
+
+            item.style.animation = `floatItem${index} ${random(20, 30)}s infinite alternate`
+            item.style.webkitAnimation = item.style.animation
 
             wrapper.append(item)
         })
-        
+
         const paralaxList = document.getElementById('paralax__list')
-        for(let i = 0; i < objects.length; i++) {
+        objects.forEach((obj) => {
             const item = document.createElement('img')
+            const rotate = uniform(-30, 30)
             item.classList.add('paralax__item')
-            item.src = 'media/'+objects[i].path
-            item.style.top = random(1000,15000)+'px'
-            item.style.left = (random(0,100)>50?random(5,30):random(70,95))+'%'
+            item.src = `media/${obj.path}`
+            item.style.position = 'absolute'
+            item.style.top = random(1000, 15000) + 'px'
+            item.style.left = (random(0, 100) > 50 ? random(5, 30) : random(70, 95)) + '%'
+            item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
+            item.style.webkitTransform = item.style.transform
             paralaxList.append(item)
 
-            window.addEventListener('scroll', ()=>{
+            window.addEventListener('scroll', () => {
                 const height = item.getBoundingClientRect().top
-                item.style.transform = `translate(-50%,-50%) translateY(${height*0.2}px)`
+                const newTransform = `translate(-50%,-50%) translateY(${height * 0.2}px) rotate(${rotate}deg)`
+                item.style.transform = newTransform
+                item.style.webkitTransform = newTransform
             })
-        }
+        })
     </script>
 </body>
 </html>

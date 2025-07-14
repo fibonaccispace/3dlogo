@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* outline: 1px dashed red; */
+    -webkit-tap-highlight-color: transparent;
 }
 
 @font-face {
@@ -10,6 +10,16 @@
     src: url('media/ALSEnormous-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
+    font-display: swap;
+}
+
+body {
+    background: black;
+    color: white;
+    font-family: 'ALSEnormous', 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
 }
 
 article {
@@ -17,18 +27,13 @@ article {
     overflow: hidden;
 }
 
-body {
-    background: black;
-    color: white;
-    font-family: 'ALSEnormous', 'Arial', sans-serif;
-}
-
 .history-block__image-wrapper {
     position: relative;
+}
 
-    .history-block__image {
-        max-width: 100% !important;
-    }
+.history-block__image-wrapper .history-block__image {
+    max-width: 100% !important;
+    display: block;
 }
 
 .history-block {
@@ -37,33 +42,45 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
 
-    .history-block__header {
-        max-width: 672px;
-        margin-top: 21px;
-        font-size: 48px;
-        text-align: center;
+.history-block .history-block__header {
+    max-width: 672px;
+    margin-top: 21px;
+    font-size: 48px;
+    text-align: center;
+}
 
-        @media (max-width: 425px) {
-            font-size: 22px;
-        }
+@media (max-width: 425px) {
+    .history-block .history-block__header {
+        font-size: 22px;
     }
 
-    .history-block__image {
-        margin-top: 80px;
-        max-width: 80%;
-
-        @media (max-width: 425px) {
-            margin-top: 50px;
-        }
+    .history-block .history-block__image {
+        margin-top: 50px;
     }
 
-    .history-block__image-helper {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        z-index: -1;
+    .date-wrapper img {
+        width: 70%;
     }
+
+    .date-wrapper span {
+        font-size: 18px;
+    }
+}
+
+.history-block .history-block__image {
+    margin-top: 80px;
+    max-width: 80%;
+}
+
+.history-block .history-block__image-helper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
 }
 
 .date-wrapper {
@@ -71,59 +88,59 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    @media (max-width: 425px) {
-        img {
-            width: 70%;
-        }
-    }
-    
-    span{
-        position: absolute;
-        font-weight: 130;
-        font-size: 24px;
+}
 
-        @media (max-width: 425px) {
-            font-size: 18px;
-        }
-    }
+.date-wrapper span {
+    position: absolute;
+    font-weight: 130;
+    font-size: 24px;
 }
 
 .main__logo {
     min-height: 100vh;
     margin-bottom: 80px;
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    .main__logo-image {
-        width: 100%;
-    }
+}
 
-    .main__particles-list {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        .main__particles-item {
-            width: 64px;
-            height: 64px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-        }
-    }
+.main__logo .main__logo-image {
+    width: 100%;
+    display: block;
+}
+
+.main__logo .main__particles-list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.main__logo .main__particles-item {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
 }
 
 .paralax__list {
     position: absolute;
     width: 100%;
     height: 100%;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .paralax__item {
     position: absolute;
+    will-change: transform;
 }
