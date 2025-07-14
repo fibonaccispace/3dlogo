@@ -24,7 +24,6 @@ body {
 
 article {
     padding: 0 20px;
-    overflow: hidden;
 }
 
 .history-block__image-wrapper {
@@ -37,6 +36,7 @@ article {
 }
 
 .history-block {
+    overflow: hidden;
     position: relative;
     margin-top: 30vh;
     display: flex;
