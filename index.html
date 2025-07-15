@@ -1,4 +1,58 @@
+@auto[]
+$Anons[^Anons::create[
+#   $.h1[ЦАТЬ]
+    $.content[^self.anons_content[]]
+    $.credits[^self.print_credits[]]
+    $.cover[
+#       $.img[project_cover.jpg]
+        $.white(true)
+#       $.whiteBg(true)
+    ]
+    $.nav[
+        $.tabs[../stolbus.p]
+        $.title[]
+    ]
+]]
+
+@main[]
+^Anons.print[]
+
+
+@print_credits[]
+<div class="column-wrapper">
+    <div class="column">
+        <h4>арт-директор</h4>
+        <ul>
+            <li>^worker[gerasimchuk]</li>
+        </ul>
+    </div>
+    <div class="column">
+        <h4>старший дизайнер</h4>
+        <ul>
+            <li>^worker[bogdanyukin]</li>
+        </ul>
+    </div>
+</div>
+
+<div class="column-wrapper">
+    <div class="column">
+        <h4>дизайнеры</h4>
+        <ul>
+            <li>Сережа Навасардян</li>
+            <li>Матвей Рогов</li>
+        </ul>
+    </div>
+</div>
+
+
+@anons_content[]
 <style>
+
+.credits {
+    background: black;
+    color: white;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,13 +60,11 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-@font-face {
-    font-family: ALSEnormous;
-    src: url(media/ALSEnormous-SemiBold.woff2) format('woff2');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-}
+
+ @font-face {
+        font-family: als_enormous_sb;
+        src: url(media/ALSEnormous-SemiBold.woff2);
+    }
 
 .bg-video {
     position: fixed;
@@ -26,14 +78,22 @@
     transition: opacity 1s ease;
 }
 
+.history-block__header,
+.date-wrapper span {
+    font-family: als_enormous_sb;
+}
+
 .bg-video.loaded {
     opacity: 1;
+}
+
+article.announce {
+    background: none;
 }
 
 body {
     background: black;
     color: white;
-    font-family: 'ALSEnormous', 'Arial', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
@@ -53,6 +113,7 @@ article {
 }
 
 .history-block {
+    transition: .1s linear;
     overflow: hidden;
     position: relative;
     margin-top: 30vh;
@@ -68,7 +129,7 @@ article {
     text-align: center;
 }
 
-@media (max-width: 425px) {
+ @media (max-width: 425px) {
     .history-block .history-block__header {
         font-size: 22px;
     }
@@ -114,7 +175,7 @@ article {
 }
 
 .main__logo {
-    min-height: 100vh;
+    min-height: calc(100vh - 270px);
     margin-bottom: 80px;
     position: relative;
     display: -webkit-box;
@@ -148,7 +209,10 @@ article {
 }
 
 .paralax__list {
-    position: absolute;
+    left: 0;
+    top: 0;
+    position: fixed;
+    overflow: hidden;
     width: 100%;
     height: 100%;
     pointer-events: none;
@@ -361,12 +425,18 @@ article {
     const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
     const uniform = (min, max) => Math.random() * (max - min) + min
 
+    const wrapper = document.getElementById('particles-list')
+    const paralaxList = document.getElementById('paralax__list')
     const video = document.getElementById('background__video')
+    const items = []
+    let startParalaxItem = window.innerHeight*1.2
+    let heightOfSite = document.documentElement.scrollHeight
+    const stepBetweenParalaxItem = 100
+    // console.log(heightOfSite)
+
     video.addEventListener('canplaythrough', () => {
         video.classList.add('loaded')
     })
-
-    const wrapper = document.getElementById('particles-list')
 
     const images = [
         'item1.png', 'item2.png', 'item3.png', 'item4.png', 
@@ -384,6 +454,8 @@ article {
         { x: 69, y: 96, z: 1 }, { x: 87, y: 83, z: 1 }, { x: 19, y: 84, z: 1 }, { x: 30, y: 13, z: 1 },
     ]
 
+    const historyBlocks = document.querySelectorAll('.history-block')
+
     const offset = random(0, images.length)
     for(let i = 0; i < images.length; i++){
         const path = images[i]
@@ -392,13 +464,13 @@ article {
         const scale = uniform(0.5, 1)
 
         const item = document.createElement('img')
-        item.src = `media/${path}`
+        item.src = 'media/'+path
         item.classList.add('main__particles-item')
         item.style.position = 'absolute'
         item.style.top = positions[index].y + '%'
         item.style.left = positions[index].x + '%'
         item.style.zIndex = positions[index].z
-        item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg) scale(${scale})`
+        item.style.transform = 'translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ')'
         item.style.webkitTransform = item.style.transform
         item.style.opacity = 0
         item.style.width = '0px'
@@ -413,73 +485,81 @@ article {
         }, random(100, 500))
 
         const style = document.createElement('style')
-        const keyframes = `
-        @keyframes floatItem${index} {
-            0% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-            25% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-            50% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-            75% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-            100% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-        }
-        @-webkit-keyframes floatItem${index} {
-            0% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-            25% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-            50% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-            75% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-            100% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-        }`
+        const keyframes =
+        '@keyframes floatItem' + index + ' {' +
+            '0% { transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-40, 41) + 'px,' + random(-40, 41) + 'px) rotate(' + uniform(-20, 20) + 'deg) }' +
+            '25% { transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-40, 41) + 'px,' + random(-40, 41) + 'px) rotate(' + uniform(-20, 20) + 'deg) }' +
+            '50% { transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-40, 41) + 'px,' + random(-40, 41) + 'px) rotate(' + uniform(-20, 20) + 'deg) }' +
+            '75% { transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-40, 41) + 'px,' + random(-40, 41) + 'px) rotate(' + uniform(-20, 20) + 'deg) }' +
+            '100% { transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-40, 41) + 'px,' + random(-40, 41) + 'px) rotate(' + uniform(-20, 20) + 'deg) }' +
+        '}' +
+        '@-webkit-keyframes floatItem' + index + ' {' +
+            '0% { -webkit-transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-20, 21) + 'px,' + random(-20, 21) + 'px) rotate(' + uniform(-10, 10) + 'deg) }' +
+            '25% { -webkit-transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-20, 21) + 'px,' + random(-20, 21) + 'px) rotate(' + uniform(-10, 10) + 'deg) }' +
+            '50% { -webkit-transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-20, 21) + 'px,' + random(-20, 21) + 'px) rotate(' + uniform(-10, 10) + 'deg) }' +
+            '75% { -webkit-transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-20, 21) + 'px,' + random(-20, 21) + 'px) rotate(' + uniform(-10, 10) + 'deg) }' +
+            '100% { -webkit-transform: translate(-50%,-50%) rotate(' + rotate + 'deg) scale(' + scale + ') translate(' + random(-20, 21) + 'px,' + random(-20, 21) + 'px) rotate(' + uniform(-10, 10) + 'deg) }' +
+        '}'
+
         style.textContent = keyframes
         document.head.appendChild(style)
 
-        item.style.animation = `floatItem${index} ${random(10, 30)}s infinite alternate`
+        item.style.animation = 'floatItem' + index + ' ' + random(10, 30) + 's infinite alternate'
         item.style.webkitAnimation = item.style.animation
 
         wrapper.append(item)
     }
 
-    const paralaxList = document.getElementById('paralax__list')
+    for(let i = startParalaxItem; 
+        i < document.documentElement.scrollHeight; 
+        i+= stepBetweenParalaxItem) {
+        addParalaxItem(i)
+    }
 
-    for(let i = 3000; i < 10000; i+= 200){
+    let throttle = false
+
+    window.addEventListener('scroll', () => {
+        if (throttle) return
+        throttle = true
+
+        setTimeout(() => {
+            const scroll = window.scrollY
+            items.forEach(item => {
+                const newTransform = 'translate(-50%,-50%) translateY('+(-scroll * item.speed)+'px) rotate('+(item.rotate + scroll*.03 * item.side)+'deg)'
+                item.element.style.transform = newTransform
+                item.element.style.zIndex = item.z
+            })
+            historyBlocks.forEach((hb, i)=>{
+                const height = window.innerHeight
+                const distToTop = hb.getBoundingClientRect().top
+                const diff = height - distToTop
+                const positive = Math.max(diff,0)
+                const norm = positive/height
+                const borderedNormalizeScale = Math.min(Math.max(.7,norm+0.5),1)
+                hb.style.transform = 'scale('+borderedNormalizeScale+')'
+            })
+
+            throttle = false
+        }, 100)
+    })
+
+    function addParalaxItem(height){
         const item = document.createElement('img')
         const rotate = uniform(-30, 30)
         item.classList.add('paralax__item')
-        item.src = `media/${images[random(0,images.length)]}`
-        item.style.position = 'absolute'
-        item.style.top = i + 'px'
-        item.style.left = random(0, 100) + '%'
-        item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
+        item.src = 'media/'+images[random(0,images.length)]
+        item.style.top = height + 'px'
+        item.style.left = random(10, 90) + '%'
+        item.style.transform = 'translate(-50%,-50%) rotate(' + rotate + 'deg)'
         item.style.webkitTransform = item.style.transform
         paralaxList.append(item)
 
         const z = random(-1,2)
         const speed = uniform(.1,.6)
-
-        window.addEventListener('scroll', () => {
-            const height = item.getBoundingClientRect().top
-            const newTransform = `translate(-50%,-50%) translateY(${height * speed}px) rotate(${rotate}deg)`
-            item.style.transform = newTransform
-            item.style.webkitTransform = newTransform
-            item.style.zIndex = z
+        items.push({
+            element: item, rotate, z, speed, side: random(0,100)>50?-1:1,
         })
     }
-
-    images.forEach((path) => {
-        const item = document.createElement('img')
-        const rotate = uniform(-30, 30)
-        item.classList.add('paralax__item')
-        item.src = `media/${path}`
-        item.style.position = 'absolute'
-        item.style.top = random(3000, 15000) + 'px'
-        item.style.left = (random(0, 100) > 50 ? random(5, 30) : random(70, 95)) + '%'
-        item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
-        item.style.webkitTransform = item.style.transform
-        paralaxList.append(item)
-
-        window.addEventListener('scroll', () => {
-            const height = item.getBoundingClientRect().top
-            const newTransform = `translate(-50%,-50%) translateY(${height * 0.2}px) rotate(${rotate}deg)`
-            item.style.transform = newTransform
-            item.style.webkitTransform = newTransform
-        })
-    })
+     
 </script>
+
