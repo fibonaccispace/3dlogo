@@ -1,320 +1,474 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цать - демо</title>
-    <link rel="stylesheet" href="main.css">
-</head>
-<body>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
 
-    <div class="paralax__list" id="paralax__list"></div>
+@font-face {
+    font-family: ALSEnormous;
+    src: url(media/ALSEnormous-SemiBold.woff2) format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
 
-    <article class="main__logo">
-        <img src="media/logo.png" alt="3D-цать" class="main__logo-image">
-        <div class="main__particles-list" id="particles-list"></div>
-    </article>
-    
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2004</span>
-        </div>
-        <h2 class="history-block__header">
-            Логотип &laquo;Яндекса&raquo;
-        </h2>
-        <img class="history-block__image" src="media/yandex.png" alt="Логотип «Яндекса»">
-    </article>
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2004</span>
-        </div>
-        <h2 class="history-block__header">
-            Логотип &laquo;Ростсельмаша&raquo;
-        </h2>
-        <img class="history-block__image" src="media/rostselmash.png" alt="Логотип «Ростсельмаша»">
-    </article>
+body {
+    background: black;
+    color: white;
+    font-family: 'ALSEnormous', 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2005</span>
-        </div>
-        <h2 class="history-block__header">
-            Микроволновые печи &laquo;Самсунг &bdquo;Свитхарт&ldquo;&raquo;
-        </h2>
-        <div class="history-block__image-wrapper">
-            <img class="history-block__image" src="media/microwave.png" alt="Микроволновые печи «Самсунг „Свитхарт“»">
-            <img src="media/microwave1.png" class="history-block__image-helper" style="width: 380px; left: 85%; top: 50%; transform: translate(0, -50%);">
-            <img src="media/microwave2.png" class="history-block__image-helper" style="width: 380px; left: 15%; top: 50%; transform: translate(-100%, -85%);">
-        </div>
-    </article>
+article {
+    padding: 0 20px;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2006</span>
-        </div>
-        <h2 class="history-block__header">
-            Пульт BBK
-        </h2>
-        <img width="460" class="history-block__image" src="media/bbk.png" alt="Пульт BBK">
-    </article>
+.history-block__image-wrapper {
+    position: relative;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2007</span>
-        </div>
-        <h2 class="history-block__header">
-            Плакат кинофильма &laquo;Груз 200&raquo;
-        </h2>
-        <img class="history-block__image" src="media/200.png" alt="Плакат кинофильма &laquo;Груз 200&raquo;">
-    </article>
+.history-block__image-wrapper .history-block__image {
+    max-width: 100% !important;
+    display: block;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2008</span>
-        </div>
-        <h2 class="history-block__header">
-            Дорожный знак &laquo;Фары и&nbsp;ремень&raquo;
-        </h2>
-        <img class="history-block__image" src="media/board.png">
-    </article>
+.history-block {
+    overflow: hidden;
+    position: relative;
+    margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2009</span>
-        </div>
-        <h2 class="history-block__header">
-            Логотип Перми
-        </h2>
-        <img class="history-block__image" src="media/perm.png">
-    </article>
+.history-block .history-block__header {
+    max-width: 672px;
+    margin-top: 21px;
+    font-size: 48px;
+    text-align: center;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2011</span>
-        </div>
-        <h2 class="history-block__header">
-            Знак &laquo;Фотографировать разрешено&raquo;
-        </h2>
-        <img class="history-block__image" src="media/photo.png">
-    </article>
+@media (max-width: 425px) {
+    .history-block .history-block__header {
+        font-size: 22px;
+    }
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2012</span>
-        </div>
-        <h2 class="history-block__header">
-            Парк Горького
-        </h2>
-        <img class="history-block__image" src="media/park.png">
-    </article>
+    .history-block .history-block__image {
+        margin-top: 50px;
+    }
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2013</span>
-        </div>
-        <h2 class="history-block__header">
-            Знак рубля
-        </h2>
-        <img class="history-block__image" src="media/rubl.png">
-    </article>
+    .date-wrapper img {
+        width: 70%;
+    }
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2013</span>
-        </div>
-        <h2 class="history-block__header">
-            Знаки возрастных ограничений
-        </h2>
-        <img class="history-block__image" src="media/18+.png">
-    </article>
+    .date-wrapper span {
+        font-size: 18px;
+    }
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2014</span>
-        </div>
-        <h2 class="history-block__header">
-            Аэропорт &laquo;Пулково&raquo;
-        </h2>
-        <img class="history-block__image" src="media/pulkovo.png">
-    </article>
+.history-block .history-block__image {
+    margin-top: 80px;
+    max-width: 80%;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2014</span>
-        </div>
-        <h2 class="history-block__header">
-            Московское метро
-        </h2>
-        <img class="history-block__image" src="media/metro.png">
-    </article>
+.history-block .history-block__image-helper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2014</span>
-        </div>
-        <h2 class="history-block__header">
-            Уличные указатели в&nbsp;Москве
-        </h2>
-        <img class="history-block__image" src="media/board2.png">
-    </article>
+.date-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2014</span>
-        </div>
-        <h2 class="history-block__header">
-            Логотип &laquo;Якитории&raquo;
-        </h2>
-        <img class="history-block__image" src="media/ykt.png">
-    </article>
+.date-wrapper span {
+    position: absolute;
+    font-weight: 130;
+    font-size: 24px;
+}
 
-    <article class="history-block">
-        <div class="date-wrapper">
-            <img src="media/date_bg.svg">
-            <span>2014</span>
-        </div>
-        <h2 class="history-block__header">
-            Вертолет &laquo;Скаут&raquo;
-        </h2>
-        <img class="history-block__image" src="media/helicopter.png" style="position: relative; transform: translate(0, -22%);">
-    </article>
+.main__logo {
+    min-height: 100vh;
+    margin-bottom: 80px;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    <script>
-        const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
-        const uniform = (min, max) => Math.random() * (max - min) + min
+.main__logo .main__logo-image {
+    width: 100%;
+    display: block;
+}
 
-        const wrapper = document.getElementById('particles-list')
+.main__logo .main__particles-list {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
 
-        const images = [
-            'item1.png', 'item2.png', 'item3.png', 'item4.png', 
-            'item5.png', 'item6.png', 'item7.png', 'item8.png', 
-            'item9.png', 'item10.png', 'item11.png', 'item12.png', 
-            'item13.png', 'item14.png', 'item15.png', 'item16.png', 
-            'item17.png', 'item18.png', 'item19.png', 'item20.png', 
-        ]
+.main__logo .main__particles-item {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
 
-        const positions = [
-            { x: 80, y: 30, z: 1 }, { x: 50, y: 42, z: 1 }, { x: 72, y: 45, z: 1 }, { x: 12, y: 71, z: 1 },
-            { x: 32, y: 91, z: 1 }, { x: 47, y: 95, z: 1 }, { x: 61, y: 89, z: 1 }, { x: 56, y: 17, z: 1 },
-            { x: 28, y: 32, z: -1 }, { x: 69, y: 29, z: 1 }, { x: 40, y: 18, z: 1 }, { x: 55, y: 55, z: 1 },
-            { x: 12, y: 32, z: 1 }, { x: 51, y: 83, z: 1 }, { x: 73, y: 85, z: 1 }, { x: 30, y: 66, z: 1 }, 
-            { x: 69, y: 96, z: 1 }, { x: 87, y: 83, z: 1 }, { x: 19, y: 84, z: 1 }, { x: 30, y: 13, z: 1 },
-        ]
+.paralax__list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
-        const offset = random(0, images.length)
-        for(let i = 0; i < images.length; i++){
-            const path = images[i]
-            const index = (i+offset)%positions.length
-            const rotate = uniform(-30, 30)
-            const scale = uniform(0.5, 1)
+.paralax__item {
+    transition: .4s ease;
+    position: absolute;
+    will-change: transform;
+    width: 32px;
+    aspect-ratio: 1/1;
+}
+</style>
 
-            const item = document.createElement('img')
-            item.src = `media/${path}`
-            item.classList.add('main__particles-item')
-            item.style.position = 'absolute'
-            item.style.top = positions[index].y + '%'
-            item.style.left = positions[index].x + '%'
-            item.style.zIndex = positions[index].z
-            item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg) scale(${scale})`
-            item.style.webkitTransform = item.style.transform
-            item.style.opacity = 0
-            item.style.width = '0px'
-            item.style.height = '0px'
-            item.style.transition = 'all .5s ease'
-            item.style.webkitTransition = 'all .5s ease'
+<video autoplay muted loop playsinline class="bg-video">
+    <source src="media/background.mp4" type="video/mp4">
+</video>
 
-            setTimeout(() => {
-                item.style.opacity = 1
-                item.style.width = '32px'
-                item.style.height = '32px'
-            }, random(100, 300))
+<div class="paralax__list" id="paralax__list"></div>
 
-            const style = document.createElement('style')
-            const keyframes = `
-            @keyframes floatItem${index} {
-                0% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-                25% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-                50% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-                75% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-                100% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
-            }
-            @-webkit-keyframes floatItem${index} {
-                0% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                25% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                50% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                75% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                100% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-            }`
-            style.textContent = keyframes
-            document.head.appendChild(style)
+<article class="main__logo">
+    <img src="media/logo.png" alt="3D-цать" class="main__logo-image">
+    <div class="main__particles-list" id="particles-list"></div>
+</article>
 
-            item.style.animation = `floatItem${index} ${random(10, 30)}s infinite alternate`
-            item.style.webkitAnimation = item.style.animation
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2004</span>
+    </div>
+    <h2 class="history-block__header">
+        Логотип &laquo;Яндекса&raquo;
+    </h2>
+    <img class="history-block__image" src="media/yandex.png" alt="Логотип «Яндекса»">
+</article>
 
-            wrapper.append(item)
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2004</span>
+    </div>
+    <h2 class="history-block__header">
+        Логотип &laquo;Ростсельмаша&raquo;
+    </h2>
+    <img class="history-block__image" src="media/rostselmash.png" alt="Логотип «Ростсельмаша»">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2005</span>
+    </div>
+    <h2 class="history-block__header">
+        Микроволновые печи &laquo;Самсунг &bdquo;Свитхарт&ldquo;&raquo;
+    </h2>
+    <div class="history-block__image-wrapper">
+        <img class="history-block__image" src="media/microwave.png" alt="Микроволновые печи «Самсунг „Свитхарт“»">
+        <img src="media/microwave1.png" class="history-block__image-helper" style="width: 380px; left: 85%; top: 50%; transform: translate(0, -50%);">
+        <img src="media/microwave2.png" class="history-block__image-helper" style="width: 380px; left: 15%; top: 50%; transform: translate(-100%, -85%);">
+    </div>
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2006</span>
+    </div>
+    <h2 class="history-block__header">
+        Пульт BBK
+    </h2>
+    <img width="460" class="history-block__image" src="media/bbk.png" alt="Пульт BBK">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2007</span>
+    </div>
+    <h2 class="history-block__header">
+        Плакат кинофильма &laquo;Груз 200&raquo;
+    </h2>
+    <img class="history-block__image" src="media/200.png" alt="Плакат кинофильма &laquo;Груз 200&raquo;">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2008</span>
+    </div>
+    <h2 class="history-block__header">
+        Дорожный знак &laquo;Фары и&nbsp;ремень&raquo;
+    </h2>
+    <img class="history-block__image" src="media/board.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2009</span>
+    </div>
+    <h2 class="history-block__header">
+        Логотип Перми
+    </h2>
+    <img class="history-block__image" src="media/perm.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2011</span>
+    </div>
+    <h2 class="history-block__header">
+        Знак &laquo;Фотографировать разрешено&raquo;
+    </h2>
+    <img class="history-block__image" src="media/photo.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2012</span>
+    </div>
+    <h2 class="history-block__header">
+        Парк Горького
+    </h2>
+    <img class="history-block__image" src="media/park.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2013</span>
+    </div>
+    <h2 class="history-block__header">
+        Знак рубля
+    </h2>
+    <img class="history-block__image" src="media/rubl.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2013</span>
+    </div>
+    <h2 class="history-block__header">
+        Знаки возрастных ограничений
+    </h2>
+    <img class="history-block__image" src="media/18+.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2014</span>
+    </div>
+    <h2 class="history-block__header">
+        Аэропорт &laquo;Пулково&raquo;
+    </h2>
+    <img class="history-block__image" src="media/pulkovo.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2014</span>
+    </div>
+    <h2 class="history-block__header">
+        Московское метро
+    </h2>
+    <img class="history-block__image" src="media/metro.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2014</span>
+    </div>
+    <h2 class="history-block__header">
+        Уличные указатели в&nbsp;Москве
+    </h2>
+    <img class="history-block__image" src="media/board2.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2014</span>
+    </div>
+    <h2 class="history-block__header">
+        Логотип &laquo;Якитории&raquo;
+    </h2>
+    <img class="history-block__image" src="media/ykt.png">
+</article>
+
+<article class="history-block">
+    <div class="date-wrapper">
+        <img src="media/date_bg.svg">
+        <span>2014</span>
+    </div>
+    <h2 class="history-block__header">
+        Вертолет &laquo;Скаут&raquo;
+    </h2>
+    <img class="history-block__image" src="media/helicopter.png" style="position: relative; transform: translate(0, -22%);">
+</article>
+
+<script>
+    const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
+    const uniform = (min, max) => Math.random() * (max - min) + min
+
+    const wrapper = document.getElementById('particles-list')
+
+    const images = [
+        'item1.png', 'item2.png', 'item3.png', 'item4.png', 
+        'item5.png', 'item6.png', 'item7.png', 'item8.png', 
+        'item9.png', 'item10.png', 'item11.png', 'item12.png', 
+        'item13.png', 'item14.png', 'item15.png', 'item16.png', 
+        'item17.png', 'item18.png', 'item19.png', 'item20.png', 
+    ]
+
+    const positions = [
+        { x: 80, y: 30, z: 1 }, { x: 50, y: 42, z: 1 }, { x: 72, y: 45, z: 1 }, { x: 12, y: 71, z: 1 },
+        { x: 32, y: 91, z: 1 }, { x: 47, y: 95, z: 1 }, { x: 61, y: 89, z: 1 }, { x: 56, y: 17, z: 1 },
+        { x: 28, y: 32, z: -1 }, { x: 69, y: 29, z: 1 }, { x: 40, y: 18, z: 1 }, { x: 55, y: 55, z: 1 },
+        { x: 12, y: 32, z: 1 }, { x: 51, y: 83, z: 1 }, { x: 73, y: 85, z: 1 }, { x: 30, y: 66, z: 1 }, 
+        { x: 69, y: 96, z: 1 }, { x: 87, y: 83, z: 1 }, { x: 19, y: 84, z: 1 }, { x: 30, y: 13, z: 1 },
+    ]
+
+    const offset = random(0, images.length)
+    for(let i = 0; i < images.length; i++){
+        const path = images[i]
+        const index = (i+offset)%positions.length
+        const rotate = uniform(-30, 30)
+        const scale = uniform(0.5, 1)
+
+        const item = document.createElement('img')
+        item.src = `media/${path}`
+        item.classList.add('main__particles-item')
+        item.style.position = 'absolute'
+        item.style.top = positions[index].y + '%'
+        item.style.left = positions[index].x + '%'
+        item.style.zIndex = positions[index].z
+        item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg) scale(${scale})`
+        item.style.webkitTransform = item.style.transform
+        item.style.opacity = 0
+        item.style.width = '0px'
+        item.style.height = '0px'
+        item.style.transition = 'all .5s ease'
+        item.style.webkitTransition = 'all .5s ease'
+
+        setTimeout(() => {
+            item.style.opacity = 1
+            item.style.width = '32px'
+            item.style.height = '32px'
+        }, random(100, 500))
+
+        const style = document.createElement('style')
+        const keyframes = `
+        @keyframes floatItem${index} {
+            0% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+            25% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+            50% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+            75% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+            100% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
         }
+        @-webkit-keyframes floatItem${index} {
+            0% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+            25% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+            50% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+            75% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+            100% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+        }`
+        style.textContent = keyframes
+        document.head.appendChild(style)
 
-        const paralaxList = document.getElementById('paralax__list')
+        item.style.animation = `floatItem${index} ${random(10, 30)}s infinite alternate`
+        item.style.webkitAnimation = item.style.animation
 
-        for(let i = 3000; i < 10000; i+= 200){
-            const item = document.createElement('img')
-            const rotate = uniform(-30, 30)
-            item.classList.add('paralax__item')
-            item.src = `media/${images[random(0,images.length)]}`
-            item.style.position = 'absolute'
-            item.style.top = i + 'px'
-            item.style.left = random(0, 100) + '%'
-            item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
-            item.style.webkitTransform = item.style.transform
-            paralaxList.append(item)
+        wrapper.append(item)
+    }
 
-            const z = random(-1,2)
-            const speed = uniform(.1,.6)
+    const paralaxList = document.getElementById('paralax__list')
 
-            window.addEventListener('scroll', () => {
-                const height = item.getBoundingClientRect().top
-                const newTransform = `translate(-50%,-50%) translateY(${height * speed}px) rotate(${rotate}deg)`
-                item.style.transform = newTransform
-                item.style.webkitTransform = newTransform
-                item.style.zIndex = z
-            })
-        }
+    for(let i = 3000; i < 10000; i+= 200){
+        const item = document.createElement('img')
+        const rotate = uniform(-30, 30)
+        item.classList.add('paralax__item')
+        item.src = `media/${images[random(0,images.length)]}`
+        item.style.position = 'absolute'
+        item.style.top = i + 'px'
+        item.style.left = random(0, 100) + '%'
+        item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
+        item.style.webkitTransform = item.style.transform
+        paralaxList.append(item)
 
-        // images.forEach((path) => {
-        //     const item = document.createElement('img')
-        //     const rotate = uniform(-30, 30)
-        //     item.classList.add('paralax__item')
-        //     item.src = `media/${path}`
-        //     item.style.position = 'absolute'
-        //     item.style.top = random(3000, 15000) + 'px'
-        //     item.style.left = (random(0, 100) > 50 ? random(5, 30) : random(70, 95)) + '%'
-        //     item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
-        //     item.style.webkitTransform = item.style.transform
-        //     paralaxList.append(item)
+        const z = random(-1,2)
+        const speed = uniform(.1,.6)
 
-        //     window.addEventListener('scroll', () => {
-        //         const height = item.getBoundingClientRect().top
-        //         const newTransform = `translate(-50%,-50%) translateY(${height * 0.2}px) rotate(${rotate}deg)`
-        //         item.style.transform = newTransform
-        //         item.style.webkitTransform = newTransform
-        //     })
-        // })
-    </script>
-</body>
-</html>
+        window.addEventListener('scroll', () => {
+            const height = item.getBoundingClientRect().top
+            const newTransform = `translate(-50%,-50%) translateY(${height * speed}px) rotate(${rotate}deg)`
+            item.style.transform = newTransform
+            item.style.webkitTransform = newTransform
+            item.style.zIndex = z
+        })
+    }
+
+    images.forEach((path) => {
+        const item = document.createElement('img')
+        const rotate = uniform(-30, 30)
+        item.classList.add('paralax__item')
+        item.src = `media/${path}`
+        item.style.position = 'absolute'
+        item.style.top = random(3000, 15000) + 'px'
+        item.style.left = (random(0, 100) > 50 ? random(5, 30) : random(70, 95)) + '%'
+        item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
+        item.style.webkitTransform = item.style.transform
+        paralaxList.append(item)
+
+        window.addEventListener('scroll', () => {
+            const height = item.getBoundingClientRect().top
+            const newTransform = `translate(-50%,-50%) translateY(${height * 0.2}px) rotate(${rotate}deg)`
+            item.style.transform = newTransform
+            item.style.webkitTransform = newTransform
+        })
+    })
+</script>
