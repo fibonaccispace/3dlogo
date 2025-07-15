@@ -241,18 +241,18 @@
 
             setTimeout(() => {
                 item.style.opacity = 1
-                item.style.width = '64px'
-                item.style.height = '64px'
+                item.style.width = '32px'
+                item.style.height = '32px'
             }, random(100, 300))
 
             const style = document.createElement('style')
             const keyframes = `
             @keyframes floatItem${index} {
-                0% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                25% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                50% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                75% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
-                100% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
+                0% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+                25% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+                50% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+                75% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
+                100% { transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-40, 41)}px,${random(-40, 41)}px) rotate(${uniform(-20, 20)}deg) }
             }
             @-webkit-keyframes floatItem${index} {
                 0% { -webkit-transform: translate(-50%,-50%) rotate(${rotate}deg) scale(${scale}) translate(${random(-20, 21)}px,${random(-20, 21)}px) rotate(${uniform(-10, 10)}deg) }
@@ -264,32 +264,57 @@
             style.textContent = keyframes
             document.head.appendChild(style)
 
-            item.style.animation = `floatItem${index} ${random(20, 50)}s infinite alternate`
+            item.style.animation = `floatItem${index} ${random(10, 30)}s infinite alternate`
             item.style.webkitAnimation = item.style.animation
 
             wrapper.append(item)
         }
 
         const paralaxList = document.getElementById('paralax__list')
-        images.forEach((path) => {
+
+        for(let i = 3000; i < 10000; i+= 200){
             const item = document.createElement('img')
             const rotate = uniform(-30, 30)
             item.classList.add('paralax__item')
-            item.src = `media/${path}`
+            item.src = `media/${images[random(0,images.length)]}`
             item.style.position = 'absolute'
-            item.style.top = random(1000, 15000) + 'px'
-            item.style.left = (random(0, 100) > 50 ? random(5, 30) : random(70, 95)) + '%'
+            item.style.top = i + 'px'
+            item.style.left = random(0, 100) + '%'
             item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
             item.style.webkitTransform = item.style.transform
             paralaxList.append(item)
 
+            const z = random(-1,2)
+            const speed = uniform(.1,.6)
+
             window.addEventListener('scroll', () => {
                 const height = item.getBoundingClientRect().top
-                const newTransform = `translate(-50%,-50%) translateY(${height * 0.2}px) rotate(${rotate}deg)`
+                const newTransform = `translate(-50%,-50%) translateY(${height * speed}px) rotate(${rotate}deg)`
                 item.style.transform = newTransform
                 item.style.webkitTransform = newTransform
+                item.style.zIndex = z
             })
-        })
+        }
+
+        // images.forEach((path) => {
+        //     const item = document.createElement('img')
+        //     const rotate = uniform(-30, 30)
+        //     item.classList.add('paralax__item')
+        //     item.src = `media/${path}`
+        //     item.style.position = 'absolute'
+        //     item.style.top = random(3000, 15000) + 'px'
+        //     item.style.left = (random(0, 100) > 50 ? random(5, 30) : random(70, 95)) + '%'
+        //     item.style.transform = `translate(-50%,-50%) rotate(${rotate}deg)`
+        //     item.style.webkitTransform = item.style.transform
+        //     paralaxList.append(item)
+
+        //     window.addEventListener('scroll', () => {
+        //         const height = item.getBoundingClientRect().top
+        //         const newTransform = `translate(-50%,-50%) translateY(${height * 0.2}px) rotate(${rotate}deg)`
+        //         item.style.transform = newTransform
+        //         item.style.webkitTransform = newTransform
+        //     })
+        // })
     </script>
 </body>
 </html>
