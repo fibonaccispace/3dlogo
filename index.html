@@ -1,4 +1,4 @@
-<!-- @auto[]
+@auto[]
 $Anons[^Anons::create[
 #   $.h1[ЦАТЬ]
     $.content[^self.anons_content[]]
@@ -45,7 +45,7 @@ $Anons[^Anons::create[
 </div>
 
 
-@anons_content[] -->
+@anons_content[]
 <style>
 
 .main__logo-video {
@@ -70,6 +70,16 @@ $Anons[^Anons::create[
         src: url(media/ALSEnormous-SemiBold.woff2);
     }
 
+ @font-face {
+        font-family: als_enormous_r;
+        src: url(media/ALSEnormous-Regular.woff2);
+    }
+
+ @font-face {
+        font-family: als_enormous_m;
+        src: url(media/ALSEnormous-Medium.woff2);
+    }
+
 .bg-video {
     position: fixed;
     top: 0;
@@ -85,6 +95,23 @@ $Anons[^Anons::create[
 .history-block__header,
 .date-wrapper span {
     font-family: als_enormous_sb;
+}
+p.main__logo-description {
+    font-family: als_enormous_r;
+}
+.main__logo-be-history {
+    transform: translateY(-25px);
+    font-family: als_enormous_m;
+    font-size: 21px;
+    text-align: center;
+}
+
+.main__logo-be-history {
+    background: white;
+    color: black;
+    border-radius: 100px;
+    padding: 16px 24px;
+    cursor: pointer;
 }
 
 .bg-video.loaded {
@@ -149,6 +176,10 @@ article {
     .date-wrapper span {
         font-size: 18px;
     }
+
+    p.main__logo-description {
+        font-size: 7px;
+    }
 }
 
 .history-block .history-block__image {
@@ -180,13 +211,23 @@ article {
 
 .main__logo {
     height: 100vh;
-    margin-bottom: 80px;
+    margin-bottom: 40vh;
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+p.main__logo-description {
+    transform: translateY(-100px);
+    max-width: 950px;
+    font-weight: 50;
+    font-size: 21px;
+    text-align: center;
+    z-index: 1;
 }
 
 .main__logo .main__logo-image {
@@ -199,7 +240,7 @@ article {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 90vh;
 }
 
 .main__logo .main__particles-item {
@@ -243,6 +284,8 @@ article {
         <source src="media/txt-alpha-v1.webm" type="video/webm">
     </video>
     <div class="main__particles-list" id="particles-list"></div>
+    <!-- <p class="main__logo-description">Когда мы&nbsp;начинали, интернет только учился ходить. За&nbsp;тридцать лет, наш дизайн стал голосом брендов, лицом событий, частью культурного контекста. Тридцать лет назад мы&nbsp;начали с&nbsp;идей, которые опережали свое время. Сегодня&nbsp;&mdash; мы&nbsp;стали частью истории дизайна. В&nbsp;этом шоуриле&nbsp;&mdash; наша история. В&nbsp;каждом кадре&nbsp;&mdash; работа, за&nbsp;которой стоят талант, мастерство и&nbsp;годы опыта. Это наш вклад в&nbsp;историю дизайна.</p> -->
+    <!-- <div class="main__logo-be-history">Стать частью истории</div> -->
 </article>
 
 <article class="history-block">
@@ -514,11 +557,11 @@ article {
         wrapper.append(item)
     }
 
-    for(let i = startParalaxItem; 
-        i < document.documentElement.scrollHeight; 
-        i+= stepBetweenParalaxItem) {
-        addParalaxItem(i)
-    }
+    // for(let i = startParalaxItem; 
+    //     i < document.documentElement.scrollHeight; 
+    //     i+= stepBetweenParalaxItem) {
+    //     addParalaxItem(i)
+    // }
 
     // ДЛЯ ЧАСТИЦ НА ВСЕМ ПУТИ САЙТА
     let throttle = false
@@ -537,17 +580,17 @@ article {
         }, 200)
     })
 
-    window.addEventListener('scroll', () => {
-        historyBlocks.forEach((hb, i)=>{
-            const height = window.innerHeight
-            const distToTop = hb.getBoundingClientRect().top
-            const diff = height - distToTop
-            const positive = Math.max(diff,0)
-            const norm = positive/height
-            const borderedNormalizeScale = Math.min(Math.max(.5,norm+0.5),1)
-            hb.style.transform = 'scale('+borderedNormalizeScale+')'
-        })
-    })
+    // window.addEventListener('scroll', () => {
+    //     historyBlocks.forEach((hb, i)=>{
+    //         const height = window.innerHeight
+    //         const distToTop = hb.getBoundingClientRect().top
+    //         const diff = height - distToTop
+    //         const positive = Math.max(diff,0)
+    //         const norm = positive/height
+    //         const borderedNormalizeScale = Math.min(Math.max(.5,norm+0.5),1)
+    //         hb.style.transform = 'scale('+borderedNormalizeScale+')'
+    //     })
+    // })
 
     function addParalaxItem(height){
         const item = document.createElement('img')
