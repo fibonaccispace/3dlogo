@@ -117,10 +117,10 @@ article {
 }
 
 .history-block {
-    transition: .1s linear;
+    /* transition: .1s linear; */
     overflow: hidden;
     position: relative;
-    margin-top: 30vh;
+    margin-top: 20vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -203,8 +203,6 @@ article {
 }
 
 .main__logo .main__particles-item {
-    width: 64px;
-    height: 64px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -435,7 +433,7 @@ article {
     const paralaxList = document.getElementById('paralax__list')
     const video = document.getElementById('background__video')
     const items = []
-    let startParalaxItem = window.innerHeight*1.2
+    let startParalaxItem = window.innerHeight*1.05
     let heightOfSite = document.documentElement.scrollHeight
     const stepBetweenParalaxItem = 100
     // console.log(heightOfSite)
@@ -522,8 +520,8 @@ article {
         addParalaxItem(i)
     }
 
+    // ДЛЯ ЧАСТИЦ НА ВСЕМ ПУТИ САЙТА
     let throttle = false
-
     window.addEventListener('scroll', () => {
         if (throttle) return
         throttle = true
@@ -535,16 +533,6 @@ article {
                 item.element.style.transform = newTransform
                 item.element.style.zIndex = item.z
             })
-            historyBlocks.forEach((hb, i)=>{
-                const height = window.innerHeight
-                const distToTop = hb.getBoundingClientRect().top
-                const diff = height - distToTop
-                const positive = Math.max(diff,0)
-                const norm = positive/height
-                const borderedNormalizeScale = Math.min(Math.max(.7,norm+0.5),1)
-                hb.style.transform = 'scale('+borderedNormalizeScale+')'
-            })
-
             throttle = false
         }, 200)
     })
@@ -556,7 +544,7 @@ article {
             const diff = height - distToTop
             const positive = Math.max(diff,0)
             const norm = positive/height
-            const borderedNormalizeScale = Math.min(Math.max(.7,norm+0.5),1)
+            const borderedNormalizeScale = Math.min(Math.max(.5,norm+0.5),1)
             hb.style.transform = 'scale('+borderedNormalizeScale+')'
         })
     })
@@ -566,6 +554,8 @@ article {
         const rotate = uniform(-30, 30)
         item.classList.add('paralax__item')
         item.src = 'media/'+images[random(0,images.length)]
+        item.style.width = 32 + 'px'
+        item.style.height = 32 + 'px'
         item.style.top = height + 'px'
         item.style.left = random(10, 90) + '%'
         item.style.transform = 'translate(-50%,-50%) rotate(' + rotate + 'deg)'
@@ -573,7 +563,7 @@ article {
         paralaxList.append(item)
 
         const z = random(-1,2)
-        const speed = uniform(.1,.6)
+        const speed = uniform(.8,2)
         items.push({
             element: item, rotate, z, speed, side: random(0,100)>50?-1:2,
         })
