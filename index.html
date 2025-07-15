@@ -22,6 +22,12 @@
     height: 100vh;
     object-fit: cover;
     z-index: -1;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.bg-video.loaded {
+    opacity: 1;
 }
 
 body {
@@ -160,7 +166,7 @@ article {
 }
 </style>
 
-<video autoplay muted loop playsinline class="bg-video">
+<video autoplay muted loop playsinline class="bg-video" id="background__video">
     <source src="media/background.mp4" type="video/mp4">
 </video>
 
@@ -354,6 +360,11 @@ article {
 <script>
     const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
     const uniform = (min, max) => Math.random() * (max - min) + min
+
+    const video = document.getElementById('background__video')
+    video.addEventListener('canplaythrough', () => {
+        video.classList.add('loaded')
+    })
 
     const wrapper = document.getElementById('particles-list')
 
