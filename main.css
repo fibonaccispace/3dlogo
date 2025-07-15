@@ -141,6 +141,9 @@ article {
 }
 
 .paralax__item {
+    transition: .4s ease;
     position: absolute;
     will-change: transform;
+    width: 32px;
+    aspect-ratio: 1/1;
 }
