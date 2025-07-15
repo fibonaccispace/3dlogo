@@ -1,4 +1,4 @@
-@auto[]
+<!-- @auto[]
 $Anons[^Anons::create[
 #   $.h1[ЦАТЬ]
     $.content[^self.anons_content[]]
@@ -45,8 +45,12 @@ $Anons[^Anons::create[
 </div>
 
 
-@anons_content[]
+@anons_content[] -->
 <style>
+
+.main__logo-video {
+    width: 100%;
+}
 
 .credits {
     background: black;
@@ -175,7 +179,7 @@ article {
 }
 
 .main__logo {
-    min-height: calc(100vh - 270px);
+    height: 100vh;
     margin-bottom: 80px;
     position: relative;
     display: -webkit-box;
@@ -237,7 +241,9 @@ article {
 <div class="paralax__list" id="paralax__list"></div>
 
 <article class="main__logo">
-    <img src="media/logo.png" alt="3D-цать" class="main__logo-image">
+    <video autoplay muted loop playsinline class="main__logo-video">
+        <source src="media/txt-alpha-v1.webm" type="video/webm">
+    </video>
     <div class="main__particles-list" id="particles-list"></div>
 </article>
 
@@ -540,7 +546,19 @@ article {
             })
 
             throttle = false
-        }, 100)
+        }, 200)
+    })
+
+    window.addEventListener('scroll', () => {
+        historyBlocks.forEach((hb, i)=>{
+            const height = window.innerHeight
+            const distToTop = hb.getBoundingClientRect().top
+            const diff = height - distToTop
+            const positive = Math.max(diff,0)
+            const norm = positive/height
+            const borderedNormalizeScale = Math.min(Math.max(.7,norm+0.5),1)
+            hb.style.transform = 'scale('+borderedNormalizeScale+')'
+        })
     })
 
     function addParalaxItem(height){
@@ -557,7 +575,7 @@ article {
         const z = random(-1,2)
         const speed = uniform(.1,.6)
         items.push({
-            element: item, rotate, z, speed, side: random(0,100)>50?-1:1,
+            element: item, rotate, z, speed, side: random(0,100)>50?-1:2,
         })
     }
      
